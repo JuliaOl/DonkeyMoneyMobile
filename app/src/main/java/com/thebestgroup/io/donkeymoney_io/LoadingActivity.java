@@ -54,9 +54,15 @@ public class LoadingActivity extends AppCompatActivity {
             super.onPostExecute(aVoid);
             mProgressBar.setVisibility(View.GONE);
             //jesli doInBackground zwroci nam true
-            startMainActivity();
+            //startMainActivity();
+
             //jesli false
-            //startAuthenticationActivity();
+            startAuthenticationActivity();
         }
+    }
+
+    private void startAuthenticationActivity() {
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 }
