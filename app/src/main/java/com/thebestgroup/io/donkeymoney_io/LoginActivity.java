@@ -32,4 +32,7 @@ public class LoginActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    public void login(View view) {
+
+    }
 }
