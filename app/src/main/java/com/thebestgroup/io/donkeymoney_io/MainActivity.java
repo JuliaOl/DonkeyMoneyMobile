@@ -12,10 +12,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.v4.app.FragmentActivity;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, MainPanelFragment.OnHeadlineSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,23 +40,6 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        //dodawanie fragmentow
-        if (findViewById(R.id.fragment_container) != null) {
-
-            if (savedInstanceState != null) {
-                return;
-            }
-
-            MainPanelFragment mainPanelFragment = new MainPanelFragment();
-
-            //firstFragment.setArguments(getIntent().getExtras());
-
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, mainPanelFragment).commit();
-
-        }
-
     }
 
     @Override
@@ -98,27 +80,22 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_main) {
+        if (id == R.id.nav_camera) {
             // Handle the camera action
-        } else if (id == R.id.nav_budget) {
+        } else if (id == R.id.nav_gallery) {
 
-        } else if (id == R.id.nav_expenses) {
+        } else if (id == R.id.nav_slideshow) {
 
-        } else if (id == R.id.nav_summary) {
+        } else if (id == R.id.nav_manage) {
 
-        } else if (id == R.id.nav_settings) {
+        } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_about_user) {
+        } else if (id == R.id.nav_send) {
 
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    @Override
-    public void onArticleSelected(int position) {
-
     }
 }
