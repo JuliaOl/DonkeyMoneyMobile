@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/DonkeyMoneyMobile.iml" filepath="$PROJECT_DIR$/.idea/DonkeyMoneyMobile.iml" />
-      <module fileurl="file://C:\Users\Zosia\AndroidStudioProjects\DonkeyMoneyMobile\DonkeyMoney_io.iml" filepath="C:\Users\Zosia\AndroidStudioProjects\DonkeyMoneyMobile\DonkeyMoney_io.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/DonkeyMoneyMobile2.iml" filepath="$PROJECT_DIR$/.idea/DonkeyMoneyMobile2.iml" />
+      <module fileurl="file://C:\Users\Julia\AndroidStudioProjects\DonkeyMoneyMobile2\DonkeyMoney_io.iml" filepath="C:\Users\Julia\AndroidStudioProjects\DonkeyMoneyMobile2\DonkeyMoney_io.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

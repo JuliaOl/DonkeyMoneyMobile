@@ -3,6 +3,9 @@ package com.thebestgroup.io.donkeymoney_io;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -23,14 +26,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -40,6 +35,11 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        MainPanelFragment mainPanelFragment = new MainPanelFragment();
+
+        getSupportFragmentManager().beginTransaction()
+              .add(R.id.main_fragments_container, mainPanelFragment).commit();
     }
 
     @Override
@@ -66,11 +66,6 @@ public class MainActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -78,24 +73,57 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+        Fragment fragment = null;
+        Class fragmentClass = null;
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
+            fragmentClass = MainPanelFragment.class;
         } else if (id == R.id.nav_gallery) {
-
+            fragmentClass = RegularBudgetFragment.class;
         } else if (id == R.id.nav_slideshow) {
-
+            fragmentClass = OverviewFragment.class;
         } else if (id == R.id.nav_manage) {
-
+            fragmentClass = LastExpensesFragment.class;
         } else if (id == R.id.nav_share) {
-
+            fragmentClass = SettingsFragment.class;
         } else if (id == R.id.nav_send) {
-
+            fragmentClass = AboutUserFragment.class;
         }
+
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Insert the fragment by replacing any existing fragment
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.main_fragments_container, fragment).addToBackStack(null).commit();
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    public void addExpense(View view) {
+        AddNewExpenseFragment newExpenseFragment = new AddNewExpenseFragment();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.main_fragments_container, newExpenseFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    public void addIncome(View view) {
+        AddNewIncomeFragment newIncomeFragment = new AddNewIncomeFragment();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.main_fragments_container, newIncomeFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
 }
