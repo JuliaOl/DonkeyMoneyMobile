@@ -1,5 +1,6 @@
 package com.thebestgroup.io.donkeymoney_io;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -32,7 +33,15 @@ public class LoginActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-    public void login(View view) {
 
+
+    public void toMainActivity(View view) {
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
+    }
+    public void login(View view) {
+        //if zweryfikowane_dane = ok
+        this.toMainActivity(view);
+        //else display "login lub hasło niepoprawne
     }
 }
