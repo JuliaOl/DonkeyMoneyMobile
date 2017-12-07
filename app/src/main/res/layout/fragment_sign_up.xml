@@ -6,7 +6,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.thebestgroup.io.donkeymoney_io.SignUpFragment">
+        tools:context="com.thebestgroup.io.donkeymoney_io.authantication.login.SignUpFragment">
 
         <EditText
             android:id="@+id/editText2"
