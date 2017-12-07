@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "1055556106573",
+    "project_id": "donkeymoney-184221"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1055556106573:android:0df9c222c6d38fa4",
+        "android_client_info": {
+          "package_name": "com.thebestgroup.io.donkeymoney_io"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1055556106573-ensa3ffd76fb4eaulel1csm4bl2i7gvo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.thebestgroup.io.donkeymoney_io",
+            "certificate_hash": "0bf94f2418dd17cf8a9781bc5b902a9a2c09cedf"
+          }
+        },
+        {
+          "client_id": "1055556106573-fr24qon22lh86v8kr8fusl7eql6g8m3p.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "1055556106573-gjnlqe5148dfva802rokdt4iqkej8vdt.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "1055556106573-ob5hjajd59rqmclj9sm54tnqhdk6qs6r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBH_Nkpgf3KBJbYoM81y3sTk54GOg2x5E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
