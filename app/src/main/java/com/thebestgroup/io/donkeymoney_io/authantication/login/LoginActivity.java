@@ -1,6 +1,7 @@
 package com.thebestgroup.io.donkeymoney_io.authantication.login;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -14,14 +15,19 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Scope;
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import com.thebestgroup.io.donkeymoney_io.R;
 
 public class LoginActivity
         extends AppCompatActivity
-        implements GoogleApiClient.OnConnectionFailedListener, GoogleLoginListener  {
+        implements GoogleApiClient.OnConnectionFailedListener, GoogleLoginListener {
 
     private static final String TAG = "Authantication";
     private GoogleApiClient googleApiClient;
@@ -88,8 +94,9 @@ public class LoginActivity
 
     }
 
-    private GoogleSignInOptions createGso(){
+    private GoogleSignInOptions createGso() {
         return new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.google_client_id))
                 .requestEmail()
                 .build();
     }
@@ -97,7 +104,7 @@ public class LoginActivity
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Log.e("GOOGLE", "Connection failed");
-        Toast.makeText(this, "Connection failed", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Connection failed. Check your Internet connection", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -125,16 +132,40 @@ public class LoginActivity
             Log.e(TAG, "display name: " + acct.getDisplayName());
 
 
-            Log.e("Email", acct.getEmail());
-            Log.e("Name", acct.getDisplayName());
-            //Log.e("Token", acct.getIdToken());
-            //Log.e("Auth code", acct.getServerAuthCode());
-
-
+            Log.d("Email", acct.getEmail());
+            Log.d("Name", acct.getDisplayName());
+            Log.d("Token", acct.getIdToken());
+            new T().execute(acct);
 //            updateUI(true);
         } else {
             // Signed out, show unauthenticated UI.
 //            updateUI(false);
+        }
+    }
+
+    private class T extends AsyncTask<GoogleSignInAccount, Void, Void>{
+
+        @Override
+        protected Void doInBackground(GoogleSignInAccount... voids) {
+            HttpResponse res = null;
+            try {
+               res = Unirest.post("https://login.salesforce.com/services/auth/sso/00D0O000000sgmaUAA/Android_client")
+                        .field("Authorization", "Bearer " + voids[0].getIdToken())
+                        .field("email", voids[0].getEmail())
+                        .field("name", voids[0].getFamilyName())
+                        .field("last_name", voids[0].getGivenName())
+                        .asJson();
+            } catch (UnirestException e) {
+                e.printStackTrace();
+            }
+
+        Log.d("Succes", res.getStatusText());
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
         }
     }
 }
