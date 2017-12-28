@@ -15,15 +15,16 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.OptionalPendingResult;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Scope;
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
+import com.thebestgroup.io.donkeymoney_io.MainActivity;
 import com.thebestgroup.io.donkeymoney_io.R;
+import com.thebestgroup.io.donkeymoney_io.utils.APIService;
+import com.thebestgroup.io.donkeymoney_io.utils.ApiUtils;
+import com.thebestgroup.io.donkeymoney_io.utils.pojos.AuthorizationResponsePojo;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity
         extends AppCompatActivity
@@ -32,33 +33,7 @@ public class LoginActivity
     private static final String TAG = "Authantication";
     private GoogleApiClient googleApiClient;
     private static final int GOOGLE_SIGN_IN = 007;
-
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(googleApiClient);
-        if (opr.isDone()) {
-            // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
-            // and the GoogleSignInResult will be available instantly.
-            Log.d("Authantication", "Got cached sign-in");
-            GoogleSignInResult result = opr.get();
-            handleGoogleSignInResult(result);
-        } else {
-            // If the user has not previously signed in on this device or the sign-in has expired,
-            // this asynchronous branch will attempt to sign in the user silently.  Cross-device
-            // single sign-on will occur in this branch.
-//            showProgressDialog();
-            opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
-                @Override
-                public void onResult(GoogleSignInResult googleSignInResult) {
-//                    hideProgressDialog();
-                    handleGoogleSignInResult(googleSignInResult);
-                }
-            });
-        }
-    }
+    private APIService service;
 
 
     @Override
@@ -73,6 +48,8 @@ public class LoginActivity
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
+
+        service = ApiUtils.getAPIService();
 
         LoginFragment loginFragment = new LoginFragment();
         //firstFragment.setArguments(getIntent().getExtras());
@@ -91,7 +68,28 @@ public class LoginActivity
     }
 
     public void login(View view) {
+        Log.i("Login", "start");
+        service.login(
+                "password",
+                "3MVG9I5UQ_0k_hTmeUVaC9dV..7VgXlT69Oraw3ycdvmAmmiykCsDVWLaJFImgV6lJi2M6BhU8Y0mQvA7WINR",
+                "6219607681359612175",
+                "donkeymoneyapp@gmail.com",
+                "12345678fCX9cOnMr0HEccp3xWqNZsdpv"
+        ).enqueue(new Callback<AuthorizationResponsePojo>() {
+            @Override
+            public void onResponse(Call<AuthorizationResponsePojo> call, Response<AuthorizationResponsePojo> response) {
+                Log.d("Authorization", String.valueOf(response.code()));
+                Log.d("Access token", response.body().getAccessToken());
+                Log.d("TOken type", response.body().getAccessToken());
+                ApiUtils.accessToken = response.body().getTokenType() + " " + response.body().getAccessToken();
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            }
 
+            @Override
+            public void onFailure(Call<AuthorizationResponsePojo> call, Throwable t) {
+                Log.e("Authorization", "Failure");
+            }
+        });
     }
 
     private GoogleSignInOptions createGso() {
@@ -135,37 +133,6 @@ public class LoginActivity
             Log.d("Email", acct.getEmail());
             Log.d("Name", acct.getDisplayName());
             Log.d("Token", acct.getIdToken());
-            new T().execute(acct);
-//            updateUI(true);
-        } else {
-            // Signed out, show unauthenticated UI.
-//            updateUI(false);
-        }
-    }
-
-    private class T extends AsyncTask<GoogleSignInAccount, Void, Void>{
-
-        @Override
-        protected Void doInBackground(GoogleSignInAccount... voids) {
-            HttpResponse res = null;
-            try {
-               res = Unirest.post("https://login.salesforce.com/services/auth/sso/00D0O000000sgmaUAA/Android_client")
-                        .field("Authorization", "Bearer " + voids[0].getIdToken())
-                        .field("email", voids[0].getEmail())
-                        .field("name", voids[0].getFamilyName())
-                        .field("last_name", voids[0].getGivenName())
-                        .asJson();
-            } catch (UnirestException e) {
-                e.printStackTrace();
-            }
-
-        Log.d("Succes", res.getStatusText());
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
         }
     }
 }

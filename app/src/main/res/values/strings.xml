@@ -29,4 +29,6 @@
     <string name="btn_logout_from_google">Logout from Google</string>
     <string name="btn_revoke_access">Revoke Access</string>
     <string name="google_client_id">1055556106573-eof1skif1lqvfbsbi1udlmhpvek8voe0.apps.googleusercontent.com</string>
+    <string name="login_url">https://eu9.salesforce.com/services</string>
+    <string name="login_test">https://eu9.salesforce.com/services/oauth2/token?grant_type=password&amp;client_id=3MVG9I5UQ_0k_hTmeUVaC9dV..7VgXlT69Oraw3ycdvmAmmiykCsDVWLaJFImgV6lJi2M6BhU8Y0mQvA7WINR&amp;client_secret=6219607681359612175&amp;username=donkeymoneyapp@gmail.com&amp;password=12345678fCX9cOnMr0HEccp3xWqNZsdpv</string>
 </resources>
