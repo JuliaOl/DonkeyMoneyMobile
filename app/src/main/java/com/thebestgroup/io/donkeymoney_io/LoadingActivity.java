@@ -13,7 +13,7 @@ import android.widget.ProgressBar;
 public class LoadingActivity extends AppCompatActivity {
 
     private ProgressBar mProgressBar;
-    private int mLongAnimationDuration;
+    //private int mLongAnimationDuration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +42,7 @@ public class LoadingActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                Thread.sleep(4000);
+                Thread.sleep(3000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
