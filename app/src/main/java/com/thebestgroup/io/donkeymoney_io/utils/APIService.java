@@ -1,6 +1,7 @@
 package com.thebestgroup.io.donkeymoney_io.utils;
 
 import com.thebestgroup.io.donkeymoney_io.utils.model.LoginResponse;
+import com.thebestgroup.io.donkeymoney_io.utils.model.SecurityTokenResponse;
 
 import java.util.Map;
 
@@ -18,11 +19,6 @@ import retrofit2.http.Query;
  */
 
 public interface APIService {
-
-    @POST("/api/user/securityToken")
-    @Headers("Content-Type: application/json")
-    Call<String> getSecurityToken(
-            @Body Map<String, String> body);
 
     @POST("/services/oauth2/token")
     Call<LoginResponse> getLoginResponse(

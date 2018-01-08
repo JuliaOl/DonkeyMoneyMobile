@@ -1,21 +1,12 @@
 package com.thebestgroup.io.donkeymoney_io.utils;
 
-//import android.content.Intent;
-import android.util.Log;
 
-//import com.thebestgroup.io.donkeymoney_io.LoginActivity;
-//import com.thebestgroup.io.donkeymoney_io.MainActivity;
 import com.thebestgroup.io.donkeymoney_io.utils.model.LoginResponse;
+import com.thebestgroup.io.donkeymoney_io.utils.model.SecurityTokenResponse;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import okhttp3.FormBody;
-import okhttp3.MediaType;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okio.BufferedSink;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -27,22 +18,59 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class RetrofitClient {
-    private static Retrofit retrofit = null;
+    private static Retrofit restAPI = null;
+    private static Retrofit securityAPI = null;
 
-    // base url: https://donkeymoney.herokuapp.com
-    public static Retrofit getClient(String baseUrl) {
-        if (retrofit==null) {
-            retrofit = new Retrofit.Builder()
+    public static Retrofit getClient(String baseUrl, APIType type) {
+        Retrofit client;
+        if (type == APIType.REST_API) {
+            client = restAPI;
+        } else {
+            client = securityAPI;
+        }
+        if (client == null) {
+            client = new Retrofit.Builder()
                     .baseUrl(baseUrl)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
-        return retrofit;
+        return client;
     }
 
+    // -------------------------------------------------------------------
+    // do testowania tylko
     public static void main(String[] args) {
-        APIService service = APIUtils.getAPIService();
+        // tworzenie serwisow do api i tokenu
+        final APIService service = APIUtils.getAPIService();
+        final SecurityTokenService tokenService = APIUtils.getTokenService();
 
+
+        // pobieranie security token
+
+        // przesylanie requesta jako 'json', serwer powinien sobie sam poradzic z rozkodowaniem tego
+        Map<String, String> requestBody = new HashMap<>();
+        requestBody.put("email", "donkeymoneyapp@gmail.com");
+        requestBody.put("password", "12345678");
+
+        tokenService.getSecurityToken(requestBody)
+                .enqueue(new Callback<SecurityTokenResponse>() {
+                    @Override
+                    public void onResponse(Call<SecurityTokenResponse> call, Response<SecurityTokenResponse> response) {
+                        System.out.println("------------- security token --------------");
+                        System.out.println("status: " + response.code());
+                        System.out.println(response.body().getSecurityToken());
+                    }
+
+                    @Override
+                    public void onFailure(Call<SecurityTokenResponse> call, Throwable t) {
+                        System.out.println("uops!");
+                        System.out.println(call);
+                        System.out.println(t);
+                    }
+                });
+
+        // -------------------------------
+        // pobieranie login response
         service.getLoginResponse(
                 "password",
                 "3MVG9I5UQ_0k_hTmeUVaC9dV..7VgXlT69Oraw3ycdvmAmmiykCsDVWLaJFImgV6lJi2M6BhU8Y0mQvA7WINR",
@@ -52,38 +80,57 @@ public class RetrofitClient {
         ).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                System.out.println("Authorization" + String.valueOf(response.code()));
-                System.out.println("Access token" + response.body().getAccessToken());
-                System.out.println("TOken type" + response.body().getTokenType());
+                System.out.println("------------- sales force login response --------------");
+                System.out.println("Authorization " + String.valueOf(response.code()));
+                System.out.println("Access token " + response.body().getAccessToken());
+                System.out.println("Token type " + response.body().getTokenType());
 //                APIUtils.accessToken = response.body().getTokenType() + " " + response.body().getAccessToken();
             }
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
-                Log.e("Authorization", "Failure");
+                System.out.println("Authorization failed");
+                System.out.println(t);
             }
         });
 
-        APIService tokenService = APIUtils.getTokenService();
 
-        
-
-        Map<String, String> requestBody = new HashMap<>();
-        requestBody.put("email", "donkeymoneyapp@gmail.com");
-        requestBody.put("password", "12345678");
-
+        // -------------------------------
+        // wykorzystanie uzyskanego securityToken w kolejnym zapytaniu - nie jestem piewien czy tak to się robi, ale dziala.. u mnie
         tokenService.getSecurityToken(requestBody)
-                .enqueue(new Callback<String>() {
+                .enqueue(new Callback<SecurityTokenResponse>() {
                     @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-                        System.out.println("-------------");
-                        System.out.println(response.code());
-                        System.out.println(response.body());
+                    public void onResponse(Call<SecurityTokenResponse> call, Response<SecurityTokenResponse> response) {
+
+                        service.getLoginResponse(
+                                "password",
+                                "3MVG9I5UQ_0k_hTmeUVaC9dV..7VgXlT69Oraw3ycdvmAmmiykCsDVWLaJFImgV6lJi2M6BhU8Y0mQvA7WINR",
+                                "6219607681359612175",
+                                "donkeymoneyapp@gmail.com",
+                                "12345678" + response.body().getSecurityToken()
+                        ).enqueue(new Callback<LoginResponse>() {
+                            @Override
+                            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                                System.out.println("------------- security token + salesforce response --------------");
+                                System.out.println("Authorization " + String.valueOf(response.code()));
+                                System.out.println("Access token " + response.body().getAccessToken());
+                                System.out.println("Token type " + response.body().getTokenType());
+//                APIUtils.accessToken = response.body().getTokenType() + " " + response.body().getAccessToken();
+                            }
+
+                            @Override
+                            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                                System.out.println("Authorization failed");
+                                System.out.println(t);
+                            }
+                        });
                     }
 
                     @Override
-                    public void onFailure(Call<String> call, Throwable t) {
-
+                    public void onFailure(Call<SecurityTokenResponse> call, Throwable t) {
+                        System.out.println("uops!");
+                        System.out.println(call);
+                        System.out.println(t);
                     }
                 });
     }

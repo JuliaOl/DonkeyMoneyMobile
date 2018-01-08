@@ -11,13 +11,11 @@ public class APIUtils {
     public static final String BASE_URL_TOKEN = "https://donkeymoney.herokuapp.com/";
 
     public static APIService getAPIService() {
-
-        return RetrofitClient.getClient(BASE_URL).create(APIService.class);
+        return RetrofitClient.getClient(BASE_URL, APIType.REST_API).create(APIService.class);
     }
 
-    public static APIService getTokenService() {
-
-        return RetrofitClient.getClient(BASE_URL_TOKEN).create(APIService.class);
+    public static SecurityTokenService getTokenService() {
+        return RetrofitClient.getClient(BASE_URL_TOKEN, APIType.SECURITY_API).create(SecurityTokenService.class);
     }
 
 }
