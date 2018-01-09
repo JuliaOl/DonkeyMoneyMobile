@@ -10,6 +10,8 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.HEAD;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -20,7 +22,8 @@ import retrofit2.http.Query;
 
 public interface APIService {
 
-    @POST("/services/oauth2/token")
+    @Headers("X-Requested-With: null")
+    @POST("/https://donkeymoney-dev-ed.my.salesforce.com/services/oauth2/token")
     Call<LoginResponse> getLoginResponse(
             @Query("grant_type") String grantType,
             @Query("client_id") String clientId,
