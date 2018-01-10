@@ -25,4 +25,10 @@
         completions."
     </string>
     <string name="passwd">passwd</string>
+    <string name="enter_exp">Enter your expense</string>
+    <string name="desc">Add description</string>
+    <string name="date">Pick a date</string>
+    <string name="enter_inc">Enter your income</string>
+    <string name="feedback">Got any feedback or queries? We are happy to help!</string>
+    <string name="reg_exp">Your month-to-month expenses</string>
 </resources>

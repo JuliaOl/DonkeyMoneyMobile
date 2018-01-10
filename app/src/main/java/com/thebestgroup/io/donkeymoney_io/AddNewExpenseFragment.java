@@ -11,14 +11,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
 import android.widget.EditText;
 
 import java.util.Locale;
 
 @TargetApi(24)
 public class AddNewExpenseFragment extends Fragment {
-    Context context = getActivity();
     String dateFormat = "dd.MM.yyyy";
     SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.GERMAN);
 
