@@ -36,7 +36,7 @@ public class LastExpensesFragment extends Fragment {
         mnth.setText(curr_month);
 
         ListView list = rootView.findViewById(R.id.list_exp);
-        list.setAdapter(new ExpensesListAdapter(null, rootView)); //lista operacji
+        //list.setAdapter(new ExpensesListAdapter(null, rootView)); //lista operacji
 
         return rootView;
     }
