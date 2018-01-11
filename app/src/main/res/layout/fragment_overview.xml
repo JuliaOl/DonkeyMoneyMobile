@@ -95,19 +95,6 @@
             app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
         <TextView
-            android:id="@+id/textView17"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:text="total savings"
-            android:textAllCaps="true"
-            android:textColor="@android:color/holo_blue_light"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView16" />
-
-        <TextView
             android:id="@+id/textView18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -115,7 +102,8 @@
             android:layout_marginStart="16dp"
             android:text="budget left"
             android:textAllCaps="true"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -186,24 +174,14 @@
             app:layout_constraintTop_toBottomOf="@+id/reg_inc" />
 
         <TextView
-            android:id="@+id/tot_sav"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="32dp"
-            android:layout_marginTop="36dp"
-            android:text="TextView"
-            android:textColor="@android:color/holo_blue_light"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/oth_inc" />
-
-        <TextView
             android:id="@+id/bud_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="64dp"
             android:layout_marginEnd="36dp"
             android:text="TextView"
-            android:textColor="@android:color/black"
+            android:textAllCaps="false"
+            android:textColor="@android:color/holo_blue_dark"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
     </android.support.constraint.ConstraintLayout>
