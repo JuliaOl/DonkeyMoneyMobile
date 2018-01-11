@@ -50,13 +50,13 @@ public class LoadingActivity extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
             try {
                 Thread.sleep(1000);
-                if(UserData.readFromFile(context).getSecurityToken() != null){
-                    isLogged = true;
-                }
-                else {
-                    isLogged = false;
-                }
-            } catch (InterruptedException | IOException e) {
+//                if(UserData.readFromFile(context).getSecurityToken() != null){
+//                    isLogged = true;
+//                }
+//                else {
+//                    isLogged = false;
+//                }
+            } catch (InterruptedException e) {
                 e.printStackTrace();
                 isLogged = false;
             }
@@ -68,10 +68,11 @@ public class LoadingActivity extends AppCompatActivity {
             super.onPostExecute(aVoid);
             mProgressBar.setVisibility(View.GONE);
             //jesli doInBackground zwroci nam true
-            if (isLogged)
-                startMainActivity();
-            else
-                startAuthenticationActivity();
+//            if (isLogged)
+//                startMainActivity();
+//            else
+//                startAuthenticationActivity();
+            startAuthenticationActivity();
         }
     }
 

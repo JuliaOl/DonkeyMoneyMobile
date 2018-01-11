@@ -144,20 +144,11 @@ public class LoginActivity extends AppCompatActivity {
                                 public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                                     if (response.code() == 200) {
                                         user.setAuthorizationToken(response.body().getTokenType() + " " + response.body().getAccessToken());
-                                        user.saveToFile(LoginActivity.this);
+                                        user.saveUserData(LoginActivity.this);
                                         System.out.println("------------- sales force login response --------------");
                                         System.out.println("Authorization " + String.valueOf(response.code()));
                                         System.out.println("Access token " + response.body().getAccessToken());
                                         System.out.println("Token type " + response.body().getTokenType());
-
-                                        UserData user1 = null;
-                                        try {
-                                            user1 = UserData.readFromFile(context);
-                                        } catch (IOException e) {
-                                            e.printStackTrace();
-                                        }
-
-                                        System.out.println(user1.getEmail());
 
                                         toMainActivity();
                                     } else {

@@ -25,6 +25,7 @@ public class AboutUserFragment extends Fragment {
                 false);
 
         TextView email = rootView.findViewById(R.id.email);
+        TextView userName = rootView.findViewById(R.id.usr_name);
 
         UserData userData = null;
         try {
@@ -35,6 +36,7 @@ public class AboutUserFragment extends Fragment {
 
         System.out.println(email);
         email.setText(userData.getEmail());
+        userName.setText(userData.getName());
         // Inflate the layout for this fragment
         return rootView;
     }

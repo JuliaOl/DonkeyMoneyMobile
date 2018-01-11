@@ -1,6 +1,12 @@
 package com.thebestgroup.io.donkeymoney_io;
 
 import android.content.Context;
+import android.widget.ListView;
+
+import com.thebestgroup.io.donkeymoney_io.utils.APIService;
+import com.thebestgroup.io.donkeymoney_io.utils.APIUtils;
+import com.thebestgroup.io.donkeymoney_io.utils.model.OperationResponse;
+import com.thebestgroup.io.donkeymoney_io.utils.model.UserDataResponse;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -8,6 +14,14 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by Zosia on 07.01.2018.
@@ -52,6 +66,39 @@ public class UserData implements Serializable {
             e.printStackTrace();
         }
         return createResumeForm;
+    }
+
+    public void saveUserData(final Context context){
+
+        APIService service = APIUtils.getAPIService();
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", authorizationToken);
+        service.getUser(
+                headers)
+                .enqueue(new Callback<UserDataResponse>() {
+                    @Override
+                    public void onResponse(Call<UserDataResponse> call, Response<UserDataResponse> response) {
+                        if (response.code() == 200) {
+                            UserDataResponse details = response.body();
+                            name = details.getName();
+                            lastName = details.getLastName();
+                            saveToFile(context);
+                        } else {
+                            System.out.println("save user data apytania o token autoryzacji: " + response.code());
+                            System.out.println("details" + response.message());
+                            System.out.println("details" + response.body());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<UserDataResponse> call, Throwable t) {
+                        System.out.println("Authorization failed");
+
+                        System.out.println(t);
+                    }
+                });
+
     }
 
     public String getAuthorizationToken() {
