@@ -3,6 +3,7 @@ package com.thebestgroup.io.donkeymoney_io;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -10,9 +11,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 public class LoadingActivity extends AppCompatActivity {
 
     private ProgressBar mProgressBar;
+    private Boolean isLogged;
+    private Context context;
     //private int mLongAnimationDuration;
 
     @Override
@@ -21,6 +27,7 @@ public class LoadingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_loading);
         mProgressBar = (ProgressBar) findViewById(R.id.loading_spinner);
         new isSignedUp().execute();
+        context = this;
 
     }
 
@@ -42,9 +49,16 @@ public class LoadingActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
+                Thread.sleep(1000);
+                if(UserData.readFromFile(context).getSecurityToken() != null){
+                    isLogged = true;
+                }
+                else {
+                    isLogged = false;
+                }
+            } catch (InterruptedException | IOException e) {
                 e.printStackTrace();
+                isLogged = false;
             }
             return null;
         }
@@ -54,10 +68,10 @@ public class LoadingActivity extends AppCompatActivity {
             super.onPostExecute(aVoid);
             mProgressBar.setVisibility(View.GONE);
             //jesli doInBackground zwroci nam true
-            //startMainActivity();
-
-            //jesli false
-            startAuthenticationActivity();
+            if (isLogged)
+                startMainActivity();
+            else
+                startAuthenticationActivity();
         }
     }
 

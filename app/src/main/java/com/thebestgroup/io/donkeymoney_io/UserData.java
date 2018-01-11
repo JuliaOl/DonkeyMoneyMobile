@@ -39,7 +39,7 @@ public class UserData implements Serializable {
     }
 
     // Creates an object by reading it from a file
-    public static UserData readFromFile(Context context) {
+    public static UserData readFromFile(Context context) throws IOException {
         UserData createResumeForm = null;
         try {
             FileInputStream fileInputStream = context.openFileInput(fileName);
@@ -47,8 +47,6 @@ public class UserData implements Serializable {
             createResumeForm = (UserData) objectInputStream.readObject();
             objectInputStream.close();
             fileInputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
         catch (ClassNotFoundException e) {
             e.printStackTrace();

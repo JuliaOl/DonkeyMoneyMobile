@@ -16,6 +16,7 @@ import com.thebestgroup.io.donkeymoney_io.utils.APIUtils;
 import com.thebestgroup.io.donkeymoney_io.utils.model.LoginResponse;
 import com.thebestgroup.io.donkeymoney_io.utils.model.OperationResponse;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -50,7 +51,12 @@ public class LastExpensesFragment extends Fragment {
 
 
         APIService service = APIUtils.getAPIService();
-        String header = UserData.readFromFile(getContext()).getAuthorizationToken();
+        String header = null;
+        try {
+            header = UserData.readFromFile(getContext()).getAuthorizationToken();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", header);
         service.getOperations(

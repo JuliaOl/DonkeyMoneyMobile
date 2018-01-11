@@ -13,7 +13,7 @@ public class MainPanelFragment extends Fragment {
 
     public MainPanelFragment() {
         // Required empty public constructor
-    }
+}
 
 
     @Override

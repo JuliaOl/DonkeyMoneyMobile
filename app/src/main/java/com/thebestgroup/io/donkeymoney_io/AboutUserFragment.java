@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.io.IOException;
+
 public class AboutUserFragment extends Fragment {
 
     public AboutUserFragment() {
@@ -24,7 +26,12 @@ public class AboutUserFragment extends Fragment {
 
         TextView email = rootView.findViewById(R.id.email);
 
-        UserData userData = UserData.readFromFile(rootView.getContext());
+        UserData userData = null;
+        try {
+            userData = UserData.readFromFile(rootView.getContext());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         System.out.println(email);
         email.setText(userData.getEmail());

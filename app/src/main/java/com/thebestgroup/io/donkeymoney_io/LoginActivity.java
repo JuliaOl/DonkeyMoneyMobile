@@ -16,6 +16,7 @@ import com.thebestgroup.io.donkeymoney_io.utils.SecurityTokenService;
 import com.thebestgroup.io.donkeymoney_io.utils.model.LoginResponse;
 import com.thebestgroup.io.donkeymoney_io.utils.model.SecurityTokenResponse;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -149,7 +150,12 @@ public class LoginActivity extends AppCompatActivity {
                                         System.out.println("Access token " + response.body().getAccessToken());
                                         System.out.println("Token type " + response.body().getTokenType());
 
-                                        UserData user1 = UserData.readFromFile(context);
+                                        UserData user1 = null;
+                                        try {
+                                            user1 = UserData.readFromFile(context);
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
 
                                         System.out.println(user1.getEmail());
 
