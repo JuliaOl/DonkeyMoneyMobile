@@ -99,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
         signIn.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View view) {
-                        user.setEmail(loginEdit.getText().toString());
+                        user.setEmail(loginEdit.getText().toString().trim());
                         user.setPassword(passwdEdit.getText().toString());
                         System.out.println(user.getEmail() + " " + user.getPassword());
                         tryToLogin(user);
