@@ -7,12 +7,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 /**
  * Created by Zosia on 07.01.2018.
  */
 
-public class UserData {
+public class UserData implements Serializable {
     public String name;
     public String lastName;
     public String email;
@@ -102,3 +103,5 @@ public class UserData {
         return password;
     }
 }
+
+

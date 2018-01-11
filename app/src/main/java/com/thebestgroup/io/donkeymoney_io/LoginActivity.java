@@ -1,5 +1,6 @@
 package com.thebestgroup.io.donkeymoney_io;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -113,9 +114,15 @@ public class LoginActivity extends AppCompatActivity {
         final APIService service = APIUtils.getAPIService();
 
         Map<String, String> requestBody = new HashMap<>();
+
+        user.setEmail("donkeymoneyapp@gmail.com");
+        user.setPassword("12345678");
         requestBody.put("email", user.getEmail());
         requestBody.put("password", user.getPassword());
 
+//
+
+        final Context context = this;
         tokenService.getSecurityToken(requestBody)
                 .enqueue(new Callback<SecurityTokenResponse>() {
                     @Override
@@ -141,6 +148,11 @@ public class LoginActivity extends AppCompatActivity {
                                         System.out.println("Authorization " + String.valueOf(response.code()));
                                         System.out.println("Access token " + response.body().getAccessToken());
                                         System.out.println("Token type " + response.body().getTokenType());
+
+                                        UserData user1 = UserData.readFromFile(context);
+
+                                        System.out.println(user1.getEmail());
+
                                         toMainActivity();
                                     } else {
                                         System.out.println("tu inny kod niz 200 dla zapytania o token autoryzacji: " + response.code());
