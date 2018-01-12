@@ -17,11 +17,7 @@
         layout="@layout/app_bar_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
-        //to usunac tak zeby sie wszystko nie posypalo
-        //main_fragment_container jest w content_main
     </LinearLayout>
-
 
 
     <android.support.design.widget.NavigationView

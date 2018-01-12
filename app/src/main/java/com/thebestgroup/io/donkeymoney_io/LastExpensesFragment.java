@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -48,6 +47,7 @@ public class LastExpensesFragment extends Fragment {
 
         TextView mnth = rootView.findViewById(R.id.month);
         mnth.setText(curr_month);
+
 
 
         APIService service = APIUtils.getAPIService();
