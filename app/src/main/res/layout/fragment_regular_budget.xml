@@ -159,7 +159,7 @@
             android:text="@string/set_money"
             android:textAlignment="center"
             android:textColor="@android:color/darker_gray"
-            android:textSize="14sp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toTopOf="@+id/mbud_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

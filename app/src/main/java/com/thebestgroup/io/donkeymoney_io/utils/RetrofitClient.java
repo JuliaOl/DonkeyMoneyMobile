@@ -7,6 +7,8 @@ import com.thebestgroup.io.donkeymoney_io.utils.model.SecurityTokenResponse;
 import java.util.HashMap;
 import java.util.Map;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,10 +31,21 @@ public class RetrofitClient {
             client = securityAPI;
         }
         if (client == null) {
-            client = new Retrofit.Builder()
+           /* client = new Retrofit.Builder()
                     .baseUrl(baseUrl)
                     .addConverterFactory(GsonConverterFactory.create())
+                    .build();*/
+            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            OkHttpClient myclient = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(baseUrl)
+                    .client(myclient)
+                    .addConverterFactory(GsonConverterFactory.create())
                     .build();
+
+            return retrofit;
         }
         return client;
     }

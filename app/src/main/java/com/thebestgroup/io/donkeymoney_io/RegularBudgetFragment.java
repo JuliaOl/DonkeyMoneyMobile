@@ -86,7 +86,7 @@ public class RegularBudgetFragment extends Fragment {
                float savings = sp.getFloat("monthly savings", 0);
                float budget = income - expense - savings;
                TextView bud = rootView.findViewById(R.id.m_bud);
-               bud.setText(Float.toString(budget));
+               bud.setText(String.format("%.2f",budget));
             }
         });
 

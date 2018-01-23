@@ -48,8 +48,6 @@ public class LastExpensesFragment extends Fragment {
         TextView mnth = rootView.findViewById(R.id.month);
         mnth.setText(curr_month);
 
-
-
         APIService service = APIUtils.getAPIService();
         String header = null;
         try {

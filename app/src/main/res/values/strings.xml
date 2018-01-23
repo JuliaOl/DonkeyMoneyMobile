@@ -30,8 +30,9 @@
     <string name="date">Pick a date</string>
     <string name="enter_inc">Enter your income</string>
     <string name="feedback">Got any feedback or queries? We are happy to help!</string>
-    <string name="reg_exp">Your month-to-month expenses</string>
+    <string name="reg_exp">Your month-to-month budget</string>
     <string name="set_mexp">Set your expenses by pressing the button</string>
     <string name="set_minc">Set your income by pressing the button</string>
     <string name="set_money">Set your expenses, income and saving by pressing the buttons</string>
+    <string name="last_trans">Your last transactions</string>
 </resources>
