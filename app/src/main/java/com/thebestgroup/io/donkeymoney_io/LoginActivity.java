@@ -144,6 +144,7 @@ public class LoginActivity extends AppCompatActivity {
                                 public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                                     if (response.code() == 200) {
                                         user.setAuthorizationToken(response.body().getTokenType() + " " + response.body().getAccessToken());
+                                        user.setBalance(0.0);
                                         user.saveUserData(LoginActivity.this);
                                         System.out.println("------------- sales force login response --------------");
                                         System.out.println("Authorization " + String.valueOf(response.code()));

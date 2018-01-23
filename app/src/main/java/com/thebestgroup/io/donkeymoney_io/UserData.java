@@ -34,6 +34,7 @@ public class UserData implements Serializable {
     public String password;
     public String securityToken;
     public String authorizationToken;
+    public Double balance;
 
 
     // Constant with a file name
@@ -61,21 +62,19 @@ public class UserData implements Serializable {
             createResumeForm = (UserData) objectInputStream.readObject();
             objectInputStream.close();
             fileInputStream.close();
-        }
-        catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         return createResumeForm;
     }
 
-    public void saveUserData(final Context context){
+    public void saveUserData(final Context context) {
 
         APIService service = APIUtils.getAPIService();
 
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", authorizationToken);
-        service.getUser(
-                headers)
+        service.getUser(headers)
                 .enqueue(new Callback<UserDataResponse>() {
                     @Override
                     public void onResponse(Call<UserDataResponse> call, Response<UserDataResponse> response) {
@@ -83,6 +82,8 @@ public class UserData implements Serializable {
                             UserDataResponse details = response.body();
                             name = details.getName();
                             lastName = details.getLastName();
+                            balance = details.getAccountBalance();
+                            System.out.println("balance in getting details: " + balance);
                             saveToFile(context);
                         } else {
                             System.out.println("save user data apytania o token autoryzacji: " + response.code());
@@ -101,6 +102,15 @@ public class UserData implements Serializable {
 
     }
 
+    public static void updateBalance(final Context context) {
+        try {
+            UserData.readFromFile(context).saveUserData(context);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public String getAuthorizationToken() {
         return authorizationToken;
     }
@@ -108,6 +118,7 @@ public class UserData implements Serializable {
     public void setAuthorizationToken(String authorizationToken) {
         this.authorizationToken = authorizationToken;
     }
+
     public String getSecurityToken() {
         return securityToken;
     }
@@ -146,6 +157,14 @@ public class UserData implements Serializable {
 
     public String getPassword() {
         return password;
+    }
+
+    public Double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(Double balance) {
+        this.balance = balance;
     }
 }
 

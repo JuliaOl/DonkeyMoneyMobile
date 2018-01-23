@@ -31,4 +31,5 @@
     <string name="enter_inc">Enter your income</string>
     <string name="feedback">Got any feedback or queries? We are happy to help!</string>
     <string name="reg_exp">Your month-to-month expenses</string>
+    <string name="logout">Come back to us soon!</string>
 </resources>
