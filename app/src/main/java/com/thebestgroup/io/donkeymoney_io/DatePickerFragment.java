@@ -41,7 +41,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
 
     public void onDateSet(DatePicker view, int year, int month, int day){
         // Do something with the chosen date
-        EditText et = (EditText) getActivity().findViewById(R.id.editDate);
+        EditText et = getActivity().findViewById(R.id.editDate);
 
         // Create a Date variable/object with user chosen date
         Calendar cal = Calendar.getInstance();

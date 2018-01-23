@@ -3,6 +3,7 @@ package com.thebestgroup.io.donkeymoney_io.utils;
 import com.thebestgroup.io.donkeymoney_io.utils.model.LoginResponse;
 import com.thebestgroup.io.donkeymoney_io.utils.model.OperationResponse;
 import com.thebestgroup.io.donkeymoney_io.utils.model.SecurityTokenResponse;
+import com.thebestgroup.io.donkeymoney_io.utils.model.SimpleOperationRequest;
 import com.thebestgroup.io.donkeymoney_io.utils.model.UserDataResponse;
 
 import java.util.List;
@@ -47,5 +48,12 @@ public interface APIService {
     @GET("/https://donkeymoney-dev-ed.my.salesforce.com/services/apexrest/user/me")
     Call<UserDataResponse> getUser(
             @HeaderMap Map<String, String> headers
+    );
+
+    @Headers("X-Requested-With: null")
+    @POST("/https://donkeymoney-dev-ed.my.salesforce.com/services/apexrest/operation")
+    Call<Void> addOperation(
+            @HeaderMap Map<String, String> headers,
+            @Body SimpleOperationRequest operationBody
     );
 }

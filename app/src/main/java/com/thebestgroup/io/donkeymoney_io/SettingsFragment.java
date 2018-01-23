@@ -40,23 +40,6 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        Button logoutbtn = rootView.findViewById(R.id.logout_btn);
-        logoutbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    UserData user = UserData.readFromFile(getContext());
-                    user.setAuthorizationToken(null);
-                    user.saveToFile(getContext());
-                    startActivity(new Intent(getContext(), MainActivity.class));
-//                    finish();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        // Inflate the layout for this fragment
         return rootView;
     }
 }

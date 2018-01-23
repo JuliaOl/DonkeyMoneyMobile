@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -99,13 +101,19 @@ public class LoginActivity extends AppCompatActivity {
         loginEdit = (EditText) findViewById(R.id.login);
         passwdEdit = (EditText) findViewById(R.id.password);
 
+        final Context context = this;
         signIn.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View view) {
                         user.setEmail(loginEdit.getText().toString().trim());
                         user.setPassword(passwdEdit.getText().toString());
+
+                        if (user.getEmail().length() == 0 || user.getPassword().length() == 0) {
+                            Toast.makeText(context, "Fields cannot be empty, you Donkey! ;)", Toast.LENGTH_LONG).show();
+                        } else {
+                            tryToLogin(user);
+                        }
                         System.out.println(user.getEmail() + " " + user.getPassword());
-                        tryToLogin(user);
                     }
                 });
     }
@@ -147,7 +155,7 @@ public class LoginActivity extends AppCompatActivity {
                                         user.setAuthorizationToken(response.body().getTokenType() + " " + response.body().getAccessToken());
 
                                         //zapisywanie do
-                                        final SharedPreferences sp = context.getSharedPreferences("pref",Context.MODE_PRIVATE);
+                                        final SharedPreferences sp = context.getSharedPreferences("pref", Context.MODE_PRIVATE);
                                         final SharedPreferences.Editor editor = sp.edit();
                                         System.out.println("saving to SP...");
 
