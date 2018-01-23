@@ -1,6 +1,7 @@
 package com.thebestgroup.io.donkeymoney_io;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.widget.ListView;
 
 import com.thebestgroup.io.donkeymoney_io.utils.APIService;
@@ -45,12 +46,15 @@ public class UserData implements Serializable {
         try {
             FileOutputStream fileOutputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            objectOutputStream.flush();
             objectOutputStream.writeObject(this);
             objectOutputStream.close();
             fileOutputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
     }
 
     // Creates an object by reading it from a file

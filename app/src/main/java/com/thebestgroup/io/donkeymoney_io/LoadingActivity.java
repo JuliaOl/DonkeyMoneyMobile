@@ -17,7 +17,7 @@ import java.io.IOException;
 public class LoadingActivity extends AppCompatActivity {
 
     private ProgressBar mProgressBar;
-    private Boolean isLogged;
+    private Boolean isLogged = false;
     private Context context;
     //private int mLongAnimationDuration;
 
@@ -36,6 +36,7 @@ public class LoadingActivity extends AppCompatActivity {
         finish();
     }
 
+
     private class isSignedUp extends AsyncTask<Void,Void,Void>{
 
         @Override
@@ -50,15 +51,17 @@ public class LoadingActivity extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
             try {
                 Thread.sleep(1000);
-//                if(UserData.readFromFile(context).getSecurityToken() != null){
-//                    isLogged = true;
-//                }
-//                else {
-//                    isLogged = false;
-//                }
+                if(UserData.readFromFile(context).getAuthorizationToken() != null){
+                    isLogged = true;
+                }
+                else {
+                    isLogged = false;
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
                 isLogged = false;
+            } catch (IOException e) {
+                e.printStackTrace();
             }
             return null;
         }
@@ -67,11 +70,10 @@ public class LoadingActivity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             mProgressBar.setVisibility(View.GONE);
-            //jesli doInBackground zwroci nam true
-//            if (isLogged)
-//                startMainActivity();
-//            else
-//                startAuthenticationActivity();
+//            jesli doInBackground zwroci nam true
+            if (isLogged)
+                startMainActivity();
+            else
             startAuthenticationActivity();
         }
     }

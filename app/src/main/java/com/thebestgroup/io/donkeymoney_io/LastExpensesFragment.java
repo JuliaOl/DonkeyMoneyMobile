@@ -47,6 +47,7 @@ public class LastExpensesFragment extends Fragment {
         String curr_month = dateFormat.format(new Date());
 
         TextView mnth = rootView.findViewById(R.id.month);
+        final TextView fetching = rootView.findViewById(R.id.fetchingExpenses);
         mnth.setText(curr_month);
 
 
@@ -78,6 +79,8 @@ public class LastExpensesFragment extends Fragment {
                                 el.setExpense(operation.getAmount().toString());
                                 lista.add(el);
                             }
+
+                            fetching.setVisibility(View.GONE);
 
                             list.setAdapter(new ExpensesListAdapter(lista, rootView.getContext())); //lista operacji
 

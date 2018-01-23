@@ -2,6 +2,7 @@ package com.thebestgroup.io.donkeymoney_io;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -144,8 +145,19 @@ public class LoginActivity extends AppCompatActivity {
                                 public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                                     if (response.code() == 200) {
                                         user.setAuthorizationToken(response.body().getTokenType() + " " + response.body().getAccessToken());
+
+                                        //zapisywanie do
+                                        final SharedPreferences sp = context.getSharedPreferences("pref",Context.MODE_PRIVATE);
+                                        final SharedPreferences.Editor editor = sp.edit();
+                                        System.out.println("saving to SP...");
+
+                                        editor.putString("authToken", user.getAuthorizationToken());
+                                        editor.commit();
+                                        System.out.println("saved to SP");
+
                                         user.setBalance(0.0);
                                         user.saveUserData(LoginActivity.this);
+
                                         System.out.println("------------- sales force login response --------------");
                                         System.out.println("Authorization " + String.valueOf(response.code()));
                                         System.out.println("Access token " + response.body().getAccessToken());

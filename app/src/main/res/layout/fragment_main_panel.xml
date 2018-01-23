@@ -56,7 +56,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:fontFamily="casual"
-            android:text="287,53 PLN"
+            android:text="Calculating..."
             android:textColor="@color/colorPrimaryDark"
             android:textSize="30sp"
             android:textStyle="bold"

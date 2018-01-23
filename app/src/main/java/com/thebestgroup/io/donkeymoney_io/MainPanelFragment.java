@@ -1,6 +1,8 @@
 package com.thebestgroup.io.donkeymoney_io;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,6 +17,7 @@ import com.thebestgroup.io.donkeymoney_io.utils.APIUtils;
 import com.thebestgroup.io.donkeymoney_io.utils.model.OperationResponse;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -49,6 +52,11 @@ public class MainPanelFragment extends Fragment {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        SharedPreferences sp = getContext().getSharedPreferences("pref", Context.MODE_PRIVATE);
+
+        header = sp.getString("authToken", "gowno");
+
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", header);
 
@@ -67,7 +75,10 @@ public class MainPanelFragment extends Fragment {
                                 sum += operation.getAmount();
                             }
 
-                            balance.setText(sum.toString());
+                            DecimalFormat df = new DecimalFormat();
+                            df.setMinimumFractionDigits(2);
+
+                            balance.setText(df.format(sum));
                         } else {
                             System.out.println("tu inny kod niz 200 dla zapytania o token autoryzacji: " + response.code());
                             System.out.println("details" + response.message());
@@ -78,14 +89,21 @@ public class MainPanelFragment extends Fragment {
                     @Override
                     public void onFailure(Call<List<OperationResponse>> call, Throwable t) {
                         System.out.println("Authorization failed");
-
                         System.out.println(t);
                     }
                 });
         return rootView;
     }
 
+    private void retry() {
+        MainPanelFragment fragment = (MainPanelFragment)
+                getFragmentManager().findFragmentById(R.id.main_fragments_container);
 
+        getFragmentManager().beginTransaction()
+                .detach(fragment)
+                .attach(fragment)
+                .commit();
+    }
 
 
 }
