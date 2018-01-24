@@ -69,7 +69,6 @@ public class ExpensesListAdapter extends BaseAdapter{
             holder.desc.setText("no data");
         }
         else {
-            //tempValues = null;
             tempValues = getItem(pos);
             String cost = tempValues.getExpense();
             holder.exp.setText(cost.concat(" PLN"));

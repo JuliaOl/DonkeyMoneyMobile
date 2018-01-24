@@ -33,13 +33,11 @@ import retrofit2.Response;
 public class OverviewFragment extends Fragment {
 
     public OverviewFragment() {
-        // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
 
 
         final View rootView = inflater.inflate(R.layout.fragment_overview, container,

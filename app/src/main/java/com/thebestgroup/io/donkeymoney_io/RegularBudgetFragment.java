@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +21,6 @@ import android.widget.TextView;
 public class RegularBudgetFragment extends Fragment {
 
     public RegularBudgetFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -29,71 +30,110 @@ public class RegularBudgetFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.fragment_regular_budget, container,
                 false);
 
-        Button outbtn = rootView.findViewById(R.id.mexp_btn);
-        Button inbtn = rootView.findViewById(R.id.minc_btn);
-        Button savbtn = rootView.findViewById(R.id.sav_btn);
-        Button budbtn = rootView.findViewById(R.id.mbud_btn);
+        final EditText m_exp = rootView.findViewById(R.id.month_exp);
+        final EditText m_inc = rootView.findViewById(R.id.month_inc);
+        final EditText sav = rootView.findViewById(R.id.month_sav);
 
-        final SharedPreferences sp = this.getActivity().getSharedPreferences("pref",Context.MODE_PRIVATE);
+        final Button outbtn = rootView.findViewById(R.id.mexp_btn);
+        final Button inbtn = rootView.findViewById(R.id.minc_btn);
+        final Button budbtn = rootView.findViewById(R.id.mbud_btn);
+
+        final SharedPreferences sp = this.getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sp.edit();
 
-        outbtn.setOnClickListener(new View.OnClickListener()
-        {
+        m_exp.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View v)
-            {
-                EditText m_exp = rootView.findViewById(R.id.month_exp);
-                float exp_nb = Float.valueOf(m_exp.getText().toString());
-                editor.putFloat("monthly expenses", exp_nb);
-                editor.commit();
-                TextView tve = rootView.findViewById(R.id.display_m);
-                tve.setText("Your monthly expenses are set!\n");
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
             }
-        });
-        savbtn.setOnClickListener(new View.OnClickListener()
-        {
+
             @Override
-            public void onClick(View v)
-            {
-                EditText sav = rootView.findViewById(R.id.month_sav);
-                float sav_nb = Float.valueOf(sav.getText().toString());
-                editor.putFloat("monthly savings", sav_nb);
-                editor.commit();
-                TextView tvi = rootView.findViewById(R.id.display_m);
-                tvi.setText("Your planned savings are set!\n");
+            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+                if ((s.toString().trim().length() == 0)) {
+                    outbtn.setActivated(false);
+                } else {
+                    float exp_nb = Float.valueOf(m_exp.getText().toString());
+                    editor.putFloat("monthly expenses", exp_nb);
+                    editor.commit();
+                    outbtn.setActivated(true);
+                }
             }
-        });
-        inbtn.setOnClickListener(new View.OnClickListener()
-        {
+
             @Override
-            public void onClick(View v)
-            {
-                EditText m_inc = rootView.findViewById(R.id.month_inc);
-                float inc_nb = Float.valueOf(m_inc.getText().toString());
-                editor.putFloat("monthly income", inc_nb);
-                editor.commit();
-                TextView tvi = rootView.findViewById(R.id.display_m);
-                tvi.setText("Your monthly income is set!\n");
-            }
-        });
-        budbtn.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-               float income = sp.getFloat("monthly income", 0);
-               float expense = sp.getFloat("monthly expenses", 0);
-               float savings = sp.getFloat("monthly savings", 0);
-               float budget = income - expense - savings;
-               TextView bud = rootView.findViewById(R.id.m_bud);
-               bud.setText(String.format("%.2f",budget));
+            public void afterTextChanged(Editable editable) {
+
             }
         });
 
-    // Inflate the layout for this fragment
+        m_inc.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+                if ((s.toString().trim().length() == 0)) {
+                    inbtn.setActivated(false);
+                } else {
+                    inbtn.setActivated(true);
+                    float inc_nb = Float.valueOf(m_inc.getText().toString());
+                    editor.putFloat("monthly income", inc_nb);
+                    editor.commit();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        sav.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+                if (s.toString().trim().length() == 0) {
+                } else {
+                    float sav_nb = Float.valueOf(sav.getText().toString());
+                    editor.putFloat("monthly savings", sav_nb);
+                    editor.commit();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        budbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if ((sp.getFloat("monthly income", 0) != 0) && (sp.getFloat("monthly expenses", 0) != 0)) {
+                    outbtn.setActivated(true); inbtn.setActivated(true);
+                } else {
+                    TextView tvi = rootView.findViewById(R.id.display_m);
+                    tvi.setText("Your expenses and income cannot equal zero!\n");
+                }
+                if (outbtn.isActivated() && inbtn.isActivated()) {
+                    float income = sp.getFloat("monthly income", 0);
+                    float expense = sp.getFloat("monthly expenses", 0);
+                    float savings = sp.getFloat("monthly savings", 0);
+                    float budget = income - expense - savings;
+                    TextView bud = rootView.findViewById(R.id.m_bud);
+                    bud.setText(String.format("%.2f", budget));
+                    TextView tvi = rootView.findViewById(R.id.display_m);
+                    tvi.setText("Your monthly budget is set!\n");
+                }
+            }
+        });
+
         return rootView;
-
     }
-
 
 }

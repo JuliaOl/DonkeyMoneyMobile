@@ -9,12 +9,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import java.io.IOException;
 
 public class SettingsFragment extends Fragment {
 
     public SettingsFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -31,7 +29,7 @@ public class SettingsFragment extends Fragment {
                 i.setType("message/rfc822");
                 i.putExtra(Intent.EXTRA_EMAIL, new String[]{"donkeymoneyapp@gmail.com"});
                 i.putExtra(Intent.EXTRA_SUBJECT, "subject of email");
-                i.putExtra(Intent.EXTRA_TEXT, "body of email");
+                i.putExtra(Intent.EXTRA_TEXT, "Feedback");
                 try {
                     startActivity(Intent.createChooser(i, "Send mail..."));
                 } catch (android.content.ActivityNotFoundException ex) {

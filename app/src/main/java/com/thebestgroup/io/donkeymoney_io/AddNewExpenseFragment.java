@@ -44,7 +44,6 @@ public class AddNewExpenseFragment extends Fragment {
     SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.GERMAN);
 
     public AddNewExpenseFragment() {
-        // Required empty public constructor
     }
 
 
@@ -57,12 +56,10 @@ public class AddNewExpenseFragment extends Fragment {
         final Button addbtn = rootView.findViewById(R.id.addbtn);
         final EditText amount = rootView.findViewById(R.id.add_exp);
         EditText editDate = rootView.findViewById(R.id.editDate);
-        // init - set date to current date
         long currentdate = System.currentTimeMillis();
         String dateString = sdf.format(currentdate);
         editDate.setText(dateString);
 
-        // onclick - popup datepicker
         editDate.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -111,8 +108,7 @@ public class AddNewExpenseFragment extends Fragment {
                     }
                     EditText decs = rootView.findViewById(R.id.desc_exp);
                     String description = decs.getText().toString();
-                    //19.01.2018
-                    //2018-12-01T13:42:33.000Z
+
                     DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
                     Date dateObject;
                     String formatted = "";
@@ -152,7 +148,6 @@ public class AddNewExpenseFragment extends Fragment {
                                         System.out.println("details" + response.body());
                                     }
                                 }
-
                                 @Override
                                 public void onFailure(Call<Void> call, Throwable t) {
                                     System.out.println("Failure");
@@ -163,7 +158,6 @@ public class AddNewExpenseFragment extends Fragment {
             }
 
         });
-
         return rootView;
     }
 

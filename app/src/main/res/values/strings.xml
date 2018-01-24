@@ -1,15 +1,11 @@
 <resources>
     <string name="app_name">DonkeyMoney</string>
-    <string name="welcome_msg">Witaj w świecie finansów osobistych DonkeyMoney!</string>
     <string name="title_activity_main">MainActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->
@@ -38,4 +34,6 @@
     <string name="last_trans">Your last transactions</string>
     <string name="fetch">Fetching, be patient... :)</string>
     <string name="donkeymoney">Donkey Money App</string>
+    <string name="month_bud">If you want to set or change your budget, enter the numbers and press the envelope button</string>
+    <string name="welcome">Welcome to your own money management space</string>
 </resources>

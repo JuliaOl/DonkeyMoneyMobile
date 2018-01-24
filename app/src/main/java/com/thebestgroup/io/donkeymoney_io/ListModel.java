@@ -25,7 +25,6 @@ public class ListModel {
         this.date = date;
     }
 
-
     public String getExpense()
     {
         return this.expense;

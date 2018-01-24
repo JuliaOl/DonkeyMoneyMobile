@@ -106,7 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                         user.setPassword(passwdEdit.getText().toString());
 
                         if (user.getEmail().length() == 0 || user.getPassword().length() == 0) {
-                            Toast.makeText(context, "Fields cannot be empty, you Donkey! ;)", Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, "Fields cannot be empty, you Donkey! ;)", Toast.LENGTH_SHORT).show();
                         } else {
                             tryToLogin(user);
                         }
@@ -121,12 +121,8 @@ public class LoginActivity extends AppCompatActivity {
 
         Map<String, String> requestBody = new HashMap<>();
 
-        user.setEmail("donkeymoneyapp@gmail.com");
-        user.setPassword("12345678");
         requestBody.put("email", user.getEmail());
         requestBody.put("password", user.getPassword());
-
-//
 
         final Context context = this;
         tokenService.getSecurityToken(requestBody)
@@ -134,6 +130,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<SecurityTokenResponse> call, Response<SecurityTokenResponse> response) {
                         if (response.code() == 200) {
+                            Toast.makeText(context, "Logging in...", Toast.LENGTH_SHORT).show();
 
                             user.setSecurityToken(response.body().getSecurityToken());
                             System.out.println("securityToken: " + user.getSecurityToken());
@@ -193,7 +190,5 @@ public class LoginActivity extends AppCompatActivity {
                         System.out.println(t);
                     }
                 });
-
-        //else display "login lub hasło niepoprawne
     }
 }
