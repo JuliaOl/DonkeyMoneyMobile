@@ -32,7 +32,6 @@ import retrofit2.Response;
 public class LastExpensesFragment extends Fragment {
 
     public LastExpensesFragment() {
-        // Required empty public constructor
     }
 
     @TargetApi(24)
@@ -42,12 +41,7 @@ public class LastExpensesFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.fragment_last_expenses, container,
                 false);
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM", Locale.ENGLISH);
-        String curr_month = dateFormat.format(new Date());
-
-        TextView mnth = rootView.findViewById(R.id.month);
         final TextView fetching = rootView.findViewById(R.id.fetchingExpenses);
-        mnth.setText(curr_month);
 
         APIService service = APIUtils.getAPIService();
         String header = null;
@@ -96,9 +90,9 @@ public class LastExpensesFragment extends Fragment {
                         System.out.println(t);
                     }
                 });
+
         return rootView;
     }
-
 }
 
 

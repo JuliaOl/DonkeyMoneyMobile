@@ -23,24 +23,18 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     }
 
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState){
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
         final Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-            /*
-                Initialize a new DatePickerDialog
-
-                DatePickerDialog(Context context, DatePickerDialog.OnDateSetListener callBack,
-                    int year, int monthOfYear, int dayOfMonth)
-             */
-        DatePickerDialog dpd = new DatePickerDialog(getActivity(),this,year,month,day);
-        return  dpd;
+        // Initialize a new DatePickerDialog
+        DatePickerDialog dpd = new DatePickerDialog(getActivity(), this, year, month, day);
+        return dpd;
     }
 
-    public void onDateSet(DatePicker view, int year, int month, int day){
-        // Do something with the chosen date
+    public void onDateSet(DatePicker view, int year, int month, int day) {
         EditText et = getActivity().findViewById(R.id.editDate);
 
         // Create a Date variable/object with user chosen date

@@ -39,7 +39,6 @@ public class AddNewIncomeFragment extends Fragment {
     SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.GERMAN);
 
     public AddNewIncomeFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -51,17 +50,15 @@ public class AddNewIncomeFragment extends Fragment {
         final Button addbtn2 = rootView.findViewById(R.id.addbtn2);
         final EditText amount = rootView.findViewById(R.id.add_inc);
         EditText editDate = rootView.findViewById(R.id.editDate);
-        // init - set date to current date
+
         long currentdate = System.currentTimeMillis();
         String dateString = sdf.format(currentdate);
         editDate.setText(dateString);
 
-        // onclick - popup datepicker
         editDate.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 DialogFragment newFragment = new DatePickerFragment();
                 newFragment.show(getFragmentManager(), "datePicker");
             }
@@ -105,8 +102,7 @@ public class AddNewIncomeFragment extends Fragment {
                     }
                     EditText decs = rootView.findViewById(R.id.desc_inc);
                     String description = decs.getText().toString();
-                    //19.01.2018
-                    //2018-12-01T13:42:33.000Z
+
                     DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
                     Date dateObject;
                     String formatted = "";
@@ -147,7 +143,6 @@ public class AddNewIncomeFragment extends Fragment {
                                         System.out.println("details" + response.body());
                                     }
                                 }
-
                                 @Override
                                 public void onFailure(Call<Void> call, Throwable t) {
                                     System.out.println("Failure");
@@ -160,9 +155,6 @@ public class AddNewIncomeFragment extends Fragment {
                 }
             }
         });
-
         return rootView;
     }
-
-
 }
