@@ -179,6 +179,8 @@ public class LoginActivity extends AppCompatActivity {
                                     System.out.println(t);
                                 }
                             });
+                        } else {
+                            Toast.makeText(context, "Wrong login or password", Toast.LENGTH_SHORT).show();
                         }
 
                     }
