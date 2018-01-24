@@ -29,12 +29,22 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * This Fragment is responsible for viewing user's monthly budget based on all expenses and incomes, both regular and others.
+ */
 @TargetApi(24)
 public class OverviewFragment extends Fragment {
 
     public OverviewFragment() {
     }
 
+    /**
+     * Calculates expenses, income and monthly budget. Creates View.
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -95,7 +105,6 @@ public class OverviewFragment extends Fragment {
                             Float o_income = Float.valueOf(String.valueOf(oth_income));
 
                             SharedPreferences sp = activity.getSharedPreferences("pref", Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = sp.edit();
 
                             Float r_income = sp.getFloat("monthly income", 0);
                             Float r_expense = - sp.getFloat("monthly expenses", 0);
@@ -112,18 +121,11 @@ public class OverviewFragment extends Fragment {
                             sav.setText(String.format("%.2f", savings));
                             bud.setText(result);
 
-                        } else {
-                            System.out.println("tu inny kod niz 200 dla zapytania o token autoryzacji: " + response.code());
-                            System.out.println("details" + response.message());
-                            System.out.println("details" + response.body());
                         }
                     }
 
                     @Override
                     public void onFailure(Call<List<OperationResponse>> call, Throwable t) {
-                        System.out.println("Authorization failed");
-
-                        System.out.println(t);
                     }
                 });
 

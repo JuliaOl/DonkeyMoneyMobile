@@ -29,7 +29,6 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        // Initialize a new DatePickerDialog
         DatePickerDialog dpd = new DatePickerDialog(getActivity(), this, year, month, day);
         return dpd;
     }
@@ -37,18 +36,15 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     public void onDateSet(DatePicker view, int year, int month, int day) {
         EditText et = getActivity().findViewById(R.id.editDate);
 
-        // Create a Date variable/object with user chosen date
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(0);
         cal.set(year, month, day, 0, 0, 0);
         Date chosenDate = cal.getTime();
 
-        // Format the date using style and locale
         String dateFormat = "dd.MM.yyyy";
         SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.GERMAN);
         String formattedDate = sdf.format(chosenDate);
 
-        // Display the chosen date to app interface
         et.setText(formattedDate);
     }
 

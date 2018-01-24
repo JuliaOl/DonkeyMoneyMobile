@@ -28,12 +28,20 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
+/**
+ * MainPanelFragment is a default view. It shows user's current balance
+ */
 public class MainPanelFragment extends Fragment {
 
     public MainPanelFragment() {
-
 }
 
+    /**
+     * Calculates user's current balance and creates view
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -53,7 +61,7 @@ public class MainPanelFragment extends Fragment {
 
         SharedPreferences sp = getContext().getSharedPreferences("pref", Context.MODE_PRIVATE);
 
-        header = sp.getString("authToken", "gowno");
+        header = sp.getString("authToken", "null");
 
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", header);
@@ -77,31 +85,13 @@ public class MainPanelFragment extends Fragment {
                             df.setMinimumFractionDigits(2);
 
                             balance.setText(df.format(sum));
-                        } else {
-                            System.out.println("tu inny kod niz 200 dla zapytania o token autoryzacji: " + response.code());
-                            System.out.println("details" + response.message());
-                            System.out.println("details" + response.body());
                         }
                     }
 
                     @Override
                     public void onFailure(Call<List<OperationResponse>> call, Throwable t) {
-                        System.out.println("Authorization failed");
-                        System.out.println(t);
                     }
                 });
         return rootView;
     }
-
-    private void retry() {
-        MainPanelFragment fragment = (MainPanelFragment)
-                getFragmentManager().findFragmentById(R.id.main_fragments_container);
-
-        getFragmentManager().beginTransaction()
-                .detach(fragment)
-                .attach(fragment)
-                .commit();
-    }
-
-
 }

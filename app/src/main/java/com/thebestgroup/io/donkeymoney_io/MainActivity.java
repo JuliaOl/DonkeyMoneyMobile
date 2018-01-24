@@ -102,6 +102,10 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     * Creates AddNewExpanseFragment
+     * @param view
+     */
     public void addExpense(View view) {
         AddNewExpenseFragment newExpenseFragment = new AddNewExpenseFragment();
 
@@ -111,6 +115,10 @@ public class MainActivity extends AppCompatActivity
         transaction.commit();
     }
 
+    /**
+     * Creates AddNewIncomeFragment
+     * @param view
+     */
     public void addIncome(View view) {
         AddNewIncomeFragment newIncomeFragment = new AddNewIncomeFragment();
 
@@ -120,6 +128,10 @@ public class MainActivity extends AppCompatActivity
         transaction.commit();
     }
 
+    /**
+     * Logs user out
+     * @param view
+     */
     public void logOut(View view) {
         new UserData().saveToFile(this);
         startActivity(new Intent(this, LoginActivity.class));

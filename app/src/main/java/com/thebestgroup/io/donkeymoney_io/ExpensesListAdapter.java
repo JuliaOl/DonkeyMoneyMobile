@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 /**
- * Created by Julia on 10.01.2018.
+ * Class used to list last expenses
  */
 
 public class ExpensesListAdapter extends BaseAdapter{

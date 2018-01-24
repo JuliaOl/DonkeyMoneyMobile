@@ -26,7 +26,8 @@ import retrofit2.Response;
 
 /**
  * Created by Zosia on 07.01.2018.
- * 
+ * This class is responsible for creating user object. It holds information about user.
+ * It has static methods used to create file where information about are saved.
  */
 
 public class UserData implements Serializable {

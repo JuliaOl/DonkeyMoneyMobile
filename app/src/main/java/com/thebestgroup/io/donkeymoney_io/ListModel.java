@@ -1,7 +1,7 @@
 package com.thebestgroup.io.donkeymoney_io;
 
 /**
- * Created by Julia on 11.01.2018.
+ * Class used to list last expenses
  */
 
 public class ListModel {

@@ -18,11 +18,21 @@ import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+/**
+ * This Fragment is responsible for viewing user's monthly budget based on regular expenses, incomes and planned savings.
+ */
 public class RegularBudgetFragment extends Fragment {
 
     public RegularBudgetFragment() {
     }
 
+    /**
+     * Calculates regular monthly budget.
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -110,7 +120,7 @@ public class RegularBudgetFragment extends Fragment {
 
             }
         });
-
+        // calculates regular monthly budget
         budbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

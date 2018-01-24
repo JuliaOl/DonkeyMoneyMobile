@@ -27,6 +27,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Login Fragment is used to log in to the application.
+ */
 public class LoginActivity extends AppCompatActivity {
 
     UserData user = new UserData();
@@ -52,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     /**
-     * Currently unable to be used. In Future it will open a fragment to sign up
+     * Opens a fragment to sign up
      * @param view
      */
     public void openSignUp(View view) {
@@ -67,8 +70,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     /**
-     * currently unable to be used
-     * saves information written by user in textfields to an user object fields when they try to sign up
+     * Saves information written by user in textfields to an user object fields when they try to sign up
      * @param view
      */
     public void saveData(View view) {
@@ -92,7 +94,11 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
-    //to było wykorzystywane do przejścia
+
+    /**
+     * Saves information written by user in text fields to an user object fields and begins login action.
+     * @param view
+     */
     public void login(View view) {
         signIn = (Button) findViewById(R.id.signInButton);
         loginEdit = (EditText) findViewById(R.id.login);
@@ -114,8 +120,11 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
+    /**
+     * Begins and executes authorization process
+     * @param user
+     */
     public void tryToLogin(final UserData user) {
-        //uzyskiwanie tokenu
         final SecurityTokenService tokenService = APIUtils.getTokenService();
         final APIService service = APIUtils.getAPIService();
 
@@ -147,36 +156,21 @@ public class LoginActivity extends AppCompatActivity {
                                     if (response.code() == 200) {
                                         user.setAuthorizationToken(response.body().getTokenType() + " " + response.body().getAccessToken());
 
-                                        //zapisywanie do
                                         final SharedPreferences sp = context.getSharedPreferences("pref", Context.MODE_PRIVATE);
                                         final SharedPreferences.Editor editor = sp.edit();
-                                        System.out.println("saving to SP...");
-
                                         editor.putString("authToken", user.getAuthorizationToken());
                                         editor.commit();
-                                        System.out.println("saved to SP");
 
                                         user.setBalance(0.0);
                                         user.saveUserData(LoginActivity.this);
 
-                                        System.out.println("------------- sales force login response --------------");
-                                        System.out.println("Authorization " + String.valueOf(response.code()));
-                                        System.out.println("Access token " + response.body().getAccessToken());
-                                        System.out.println("Token type " + response.body().getTokenType());
-
+                                        //przejście do Main Activity
                                         toMainActivity();
-                                    } else {
-                                        System.out.println("tu inny kod niz 200 dla zapytania o token autoryzacji: " + response.code());
-                                        System.out.println("details" + response.message());
-                                        System.out.println("details" + response.body());
                                     }
-//                APIUtils.accessToken = response.body().getTokenType() + " " + response.body().getAccessToken();
                                 }
 
                                 @Override
                                 public void onFailure(Call<LoginResponse> call, Throwable t) {
-                                    System.out.println("Authorization failed");
-                                    System.out.println(t);
                                 }
                             });
                         } else {
@@ -184,12 +178,8 @@ public class LoginActivity extends AppCompatActivity {
                         }
 
                     }
-
                     @Override
                     public void onFailure(Call<SecurityTokenResponse> call, Throwable t) {
-                        System.out.println("uops!");
-                        System.out.println(call);
-                        System.out.println(t);
                     }
                 });
     }

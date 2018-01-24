@@ -14,12 +14,14 @@ import android.widget.ProgressBar;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+/**
+ * This activity is used to check if client is logged in and starts suitable action.
+ */
 public class LoadingActivity extends AppCompatActivity {
 
     private ProgressBar mProgressBar;
     private Boolean isLogged = false;
     private Context context;
-    //private int mLongAnimationDuration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +45,12 @@ public class LoadingActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             mProgressBar.setVisibility(View.VISIBLE);
-            //startAnimation();
         }
 
-        //tu będzie sprawdzenie czy uzytkownik jest zalogowany
+        /**
+         * Checks if user is logged and sets field isLogged.
+         * @param voids
+         */
         @Override
         protected Void doInBackground(Void... voids) {
             try {
@@ -66,11 +70,14 @@ public class LoadingActivity extends AppCompatActivity {
             return null;
         }
 
+        /**
+         * Starts Main Activity or Authentication Activity based on isLogged field.
+         * @param aVoid
+         */
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             mProgressBar.setVisibility(View.GONE);
-//            jesli doInBackground zwroci nam true
             if (isLogged)
                 startMainActivity();
             else
@@ -78,6 +85,10 @@ public class LoadingActivity extends AppCompatActivity {
         }
     }
 
+
+    /**
+     * starts Login Activity
+     */
     private void startAuthenticationActivity() {
         startActivity(new Intent(this, LoginActivity.class));
         finish();
