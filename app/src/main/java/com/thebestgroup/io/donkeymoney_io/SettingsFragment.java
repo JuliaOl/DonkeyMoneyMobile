@@ -10,6 +10,9 @@ import android.widget.Button;
 import android.widget.Toast;
 
 
+/**
+ * SettingsFragment displays 'contact us' button.
+ */
 public class SettingsFragment extends Fragment {
 
     public SettingsFragment() {

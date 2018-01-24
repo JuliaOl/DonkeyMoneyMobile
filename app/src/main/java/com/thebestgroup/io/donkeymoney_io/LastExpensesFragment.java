@@ -34,6 +34,9 @@ public class LastExpensesFragment extends Fragment {
     public LastExpensesFragment() {
     }
 
+    /**
+     * Lists last expenses
+     */
     @TargetApi(24)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,10 +79,6 @@ public class LastExpensesFragment extends Fragment {
 
                             list.setAdapter(new ExpensesListAdapter(lista, rootView.getContext())); //lista operacji
 
-                        } else {
-                            System.out.println("tu inny kod niz 200 dla zapytania o token autoryzacji: " + response.code());
-                            System.out.println("details" + response.message());
-                            System.out.println("details" + response.body());
                         }
                     }
 
