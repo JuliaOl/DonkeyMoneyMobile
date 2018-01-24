@@ -5,7 +5,7 @@ package com.thebestgroup.io.donkeymoney_io.utils.model;
         import com.google.gson.annotations.SerializedName;
 
 public class LoginResponse {
-
+    
     @SerializedName("access_token")
     @Expose
     private String accessToken;

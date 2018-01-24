@@ -6,8 +6,6 @@ import android.content.SharedPreferences;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,7 +17,6 @@ import com.thebestgroup.io.donkeymoney_io.utils.SecurityTokenService;
 import com.thebestgroup.io.donkeymoney_io.utils.model.LoginResponse;
 import com.thebestgroup.io.donkeymoney_io.utils.model.SecurityTokenResponse;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
