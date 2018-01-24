@@ -45,17 +45,16 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         LoginFragment loginFragment = new LoginFragment();
-
-        //firstFragment.setArguments(getIntent().getExtras());
-
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_container, loginFragment).commit();
-
-
     }
 
+
+    /**
+     * Currently unable to be used. In Future it will open a fragment to sign up
+     * @param view
+     */
     public void openSignUp(View view) {
         // Create fragment and give it an argument specifying the article it should show
         SignUpFragment signUpFragment = new SignUpFragment();
@@ -67,6 +66,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * currently unable to be used
+     * saves information written by user in textfields to an user object fields when they try to sign up
+     * @param view
+     */
     public void saveData(View view) {
         doSignUpBotton = (Button) findViewById(R.id.doSignUpButton);
         nameEdit = (EditText) findViewById(R.id.name);
@@ -74,21 +78,15 @@ public class LoginActivity extends AppCompatActivity {
         emailEdit = (EditText) findViewById(R.id.email);
         passwdSUEdit = (EditText) findViewById(R.id.passwdSignUp);
 
-        //doSignUpBotton.setOnClickListener(
-        //        new View.OnClickListener()
-        //        {
-        //            public void onClick(View view)
-        //            {
         user.setName(nameEdit.getText().toString());
         user.setLastName(lastNameEdit.getText().toString());
         user.setEmail(emailEdit.getText().toString());
         user.setPassword(passwdSUEdit.getText().toString());
-        System.out.println(user.getName() + " " + user.getLastName() + " " + user.getEmail() + " " + user.getPassword());
-        //           }
-        //       });
-        // TODO zarejestuj i wejdź do toMainActivity;
     }
 
+    /**
+     * starts MainActivity
+     */
     public void toMainActivity() {
         startActivity(new Intent(this, MainActivity.class));
         finish();
@@ -96,7 +94,6 @@ public class LoginActivity extends AppCompatActivity {
 
     //to było wykorzystywane do przejścia
     public void login(View view) {
-        //if zweryfikowane_dane = ok
         signIn = (Button) findViewById(R.id.signInButton);
         loginEdit = (EditText) findViewById(R.id.login);
         passwdEdit = (EditText) findViewById(R.id.password);
@@ -113,7 +110,6 @@ public class LoginActivity extends AppCompatActivity {
                         } else {
                             tryToLogin(user);
                         }
-                        System.out.println(user.getEmail() + " " + user.getPassword());
                     }
                 });
     }

@@ -26,6 +26,7 @@ import retrofit2.Response;
 
 /**
  * Created by Zosia on 07.01.2018.
+ * 
  */
 
 public class UserData implements Serializable {
@@ -41,7 +42,10 @@ public class UserData implements Serializable {
     // Constant with a file name
     public static String fileName = "userData.ser";
 
-    // Serializes an object and saves it to a file
+    /**
+     * Serializesz an object and saves it to a file
+     * @param context
+     */
     public void saveToFile(Context context) {
         try {
             FileOutputStream fileOutputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
@@ -57,21 +61,31 @@ public class UserData implements Serializable {
 
     }
 
-    // Creates an object by reading it from a file
+    /**
+     * Creates an object by reading it from a file
+     * @param context
+     * @return new User
+     * @throws IOException
+     */
     public static UserData readFromFile(Context context) throws IOException {
-        UserData createResumeForm = null;
+        UserData createUser = null;
         try {
             FileInputStream fileInputStream = context.openFileInput(fileName);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-            createResumeForm = (UserData) objectInputStream.readObject();
+            createUser = (UserData) objectInputStream.readObject();
             objectInputStream.close();
             fileInputStream.close();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return createResumeForm;
+        return createUser;
     }
 
+
+    /**
+     * Saves information about user
+     * @param context
+     */
     public void saveUserData(final Context context) {
 
         APIService service = APIUtils.getAPIService();
@@ -87,31 +101,15 @@ public class UserData implements Serializable {
                             name = details.getName();
                             lastName = details.getLastName();
                             balance = details.getAccountBalance();
-                            System.out.println("balance in getting details: " + balance);
                             saveToFile(context);
-                        } else {
-                            System.out.println("save user data apytania o token autoryzacji: " + response.code());
-                            System.out.println("details" + response.message());
-                            System.out.println("details" + response.body());
                         }
                     }
 
                     @Override
                     public void onFailure(Call<UserDataResponse> call, Throwable t) {
-                        System.out.println("Authorization failed");
-
-                        System.out.println(t);
                     }
                 });
 
-    }
-
-    public static void updateBalance(final Context context) {
-        try {
-            UserData.readFromFile(context).saveUserData(context);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
 
